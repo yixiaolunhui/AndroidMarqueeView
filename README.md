@@ -4,4 +4,4 @@
 
 #效果图
 
-![image]{https://github.com/dalong982242260/AndroidMarqueeView/blob/master/gif/marqueeview.gif?raw=true}
+![image](https://github.com/dalong982242260/AndroidMarqueeView/blob/master/gif/marqueeview.gif?raw=true)
