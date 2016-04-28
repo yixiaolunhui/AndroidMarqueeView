@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:orientation="vertical"
+    android:layout_width="fill_parent"
+    android:layout_height="fill_parent">
+
+    <com.dalong.marqueeview.MarqueeView
+        android:id="@+id/mMarqueeView"
+        app:textcolor="@color/colorAccent"
+        app:textSize="16sp"
+        app:startPoint="end"
+        app:isRepeat="true"
+        app:direction="left"
+        app:marqueebackground="@color/colorPrimaryDark"
+        android:layout_width="match_parent"
+        android:layout_height="50dp" />
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+        <Button
+            android:text="开始"
+            android:id="@+id/start"
+            android:textSize="18sp"
+            android:layout_weight="1"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content" />
+        <Button
+            android:text="停止"
+            android:id="@+id/stop"
+            android:layout_weight="1"
+            android:textSize="18sp"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content" />
+    </LinearLayout>
+</LinearLayout>
+
