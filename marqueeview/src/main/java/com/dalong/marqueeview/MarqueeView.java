@@ -8,6 +8,7 @@ import android.graphics.Paint;
 import android.text.TextPaint;
 import android.text.TextUtils;
 import android.util.AttributeSet;
+import android.util.Log;
 import android.view.SurfaceHolder;
 import android.view.SurfaceView;
 
@@ -45,7 +46,8 @@ public class MarqueeView  extends SurfaceView implements SurfaceHolder.Callback{
 
     public int currentX=0;// 当前x的位置
 
-    public int sepX=5;//每一步滚动的距离
+    public int sepX=2;//每一步滚动的距离
+    private boolean isFirst;
 
     public MarqueeView(Context context) {
         this(context,null);
@@ -94,6 +96,7 @@ public class MarqueeView  extends SurfaceView implements SurfaceHolder.Callback{
         textWidth = (int)mTextPaint.measureText(margueeString);
         Paint.FontMetrics fontMetrics = mTextPaint.getFontMetrics();
         textHeight = (int) fontMetrics.bottom;
+        isFirst=true;
     }
 
     @Override
@@ -167,28 +170,33 @@ public class MarqueeView  extends SurfaceView implements SurfaceHolder.Callback{
 
                     int centeYLine = paddingTop + contentHeight / 2;//中心线
 
+                    Log.v("999999","contentWidth:"+contentWidth);
+                    if(isFirst){
+                        if(mStartPoint==0)
+                            currentX=0;
+                        else
+                            currentX=getWidth();
+                        isFirst=false;
+                    }
+
+
                     if(mDirection==0) {//向左滚动
                         if(currentX <=-textWidth){
                             if(!mIsRepeat){//如果是不重复滚动
                                 stopScroll();
                                 return;
                             }
-                            if(mStartPoint==0){//最初位置
-                                currentX=0;
-                            }else{//最后位置
-                                currentX=contentWidth;
-                            }
-
+                            currentX=contentWidth;
                         }else{
                             currentX-=sepX;
                         }
                     }else {//  向右滚动
                         if(currentX>=contentWidth){
-                            if(mStartPoint==0){//最初位置
-                                currentX=0;
-                            }else{//最后位置
-                                currentX=-textWidth;
+                            if(!mIsRepeat){//如果是不重复滚动
+                                stopScroll();
+                                return;
                             }
+                            currentX=-textWidth;
                         }else{
                             currentX+=sepX;
                         }
@@ -197,7 +205,16 @@ public class MarqueeView  extends SurfaceView implements SurfaceHolder.Callback{
                     canvas.drawColor(mBackgroundColor);
                     canvas.drawText(margueeString,currentX, centeYLine+dip2px(getContext(),textHeight)/2,mTextPaint);
                     holder.unlockCanvasAndPost(canvas);//结束锁定画图，并提交改变。
-                    Thread.sleep(textWidth/margueeString.trim().length()/sepX);//睡眠时间为1秒
+
+                    int a=textWidth/margueeString.trim().length();
+                    int b=a/sepX;
+                    int c=mSpeed/b==0?2:mSpeed/b;
+
+                    Log.v("888888","b:"+b);
+                    Log.v("888888","c:"+c);
+                    Thread.sleep(c);//睡眠时间为移动的频率
+
+
                 }
             }
             catch (Exception e) {
