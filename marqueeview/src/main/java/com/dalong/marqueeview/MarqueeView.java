@@ -49,7 +49,7 @@ public class MarqueeView  extends SurfaceView implements SurfaceHolder.Callback{
 
     public int currentX=0;// 当前x的位置
 
-    public int sepX=2;//每一步滚动的距离
+    public int sepX=5;//每一步滚动的距离
 
     public MarqueeView(Context context) {
         this(context,null);

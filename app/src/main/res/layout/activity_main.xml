@@ -12,7 +12,7 @@
         app:startPoint="end"
         app:isRepeat="true"
         app:direction="right"
-        app:speed="50"
+        app:speed="20"
         app:marqueebackground="@color/colorPrimaryDark"
         android:layout_width="match_parent"
         android:layout_height="50dp" />

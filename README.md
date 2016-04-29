@@ -9,6 +9,7 @@
 #效果图
 
 设置1：设置不可重复滚动，滚动完毕不在滚动（方向向左）
+
          <com.dalong.marqueeview.MarqueeView
                 android:id="@+id/mMarqueeView"
                 app:textcolor="@color/colorAccent" //滚动字体的颜色
@@ -25,6 +26,7 @@
 
 
 设置2：设置不可重复滚动，滚动完毕不在滚动 （方向向右）
+
          <com.dalong.marqueeview.MarqueeView
                 android:id="@+id/mMarqueeView"
                 app:textcolor="@color/colorAccent" //滚动字体的颜色
@@ -40,6 +42,7 @@
 ![image](https://github.com/dalong982242260/AndroidMarqueeView/blob/master/gif/marqueeview2.gif?raw=true)
 
 设置3：设置可重复滚动，滚动完毕再次滚动 （方向向左）
+
          <com.dalong.marqueeview.MarqueeView
                 android:id="@+id/mMarqueeView"
                 app:textcolor="@color/colorAccent" //滚动字体的颜色
@@ -56,6 +59,7 @@
 
 
 设置4：设置可重复滚动，滚动完毕再次滚动 （方向向右）
+
          <com.dalong.marqueeview.MarqueeView
                 android:id="@+id/mMarqueeView"
                 app:textcolor="@color/colorAccent" //滚动字体的颜色
@@ -73,6 +77,7 @@
 
 
 设置5：设置速度
+
          <com.dalong.marqueeview.MarqueeView
                 android:id="@+id/mMarqueeView"
                 app:textcolor="@color/colorAccent" //滚动字体的颜色
