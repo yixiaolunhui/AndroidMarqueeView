@@ -93,9 +93,10 @@ public class MarqueeView  extends SurfaceView implements SurfaceHolder.Callback{
         margueeString=msg;
         mTextPaint.setTextSize(mTextSize);
         mTextPaint.setColor(mTextColor);
+        mTextPaint.setStrokeWidth(0.5f);
         mTextPaint.setFakeBoldText(true);
         // 设定阴影(柔边, X 轴位移, Y 轴位移, 阴影颜色)
-        mTextPaint.setShadowLayer(5, 3, 3, ShadowColor);
+//        mTextPaint.setShadowLayer(5, 3, 3, ShadowColor);
         textWidth = (int)mTextPaint.measureText(margueeString);
         Paint.FontMetrics fontMetrics = mTextPaint.getFontMetrics();
         textHeight = (int) fontMetrics.bottom;
