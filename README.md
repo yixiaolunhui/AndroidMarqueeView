@@ -91,3 +91,11 @@
                 android:layout_height="50dp" />
 
 ![image](https://github.com/dalong982242260/AndroidMarqueeView/blob/master/gif/marqueeview5.gif?raw=true)
+
+
+
+# 如何使用
+    
+    dependencies {
+        compile 'com.dalong:marqueeview:1.0.0'
+    }
