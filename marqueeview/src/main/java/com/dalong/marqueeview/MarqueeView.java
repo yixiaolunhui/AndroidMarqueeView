@@ -5,18 +5,21 @@ import android.content.res.TypedArray;
 import android.graphics.Canvas;
 import android.graphics.Color;
 import android.graphics.Paint;
+import android.os.Handler;
+import android.os.Message;
 import android.text.TextPaint;
 import android.text.TextUtils;
 import android.util.AttributeSet;
 import android.util.Log;
 import android.view.SurfaceHolder;
 import android.view.SurfaceView;
+import android.view.WindowManager;
 
 /**
  * Created by zhouweilong on 16/4/28.
  */
 public class MarqueeView  extends SurfaceView implements SurfaceHolder.Callback{
-
+    public Context  mContext;
 
     private float mTextSize = 100; //字体大小
 
@@ -46,8 +49,7 @@ public class MarqueeView  extends SurfaceView implements SurfaceHolder.Callback{
 
     public int currentX=0;// 当前x的位置
 
-    public int sepX=2;//每一步滚动的距离
-    private boolean isFirst;
+    public int sepX=3;//每一步滚动的距离
 
     public MarqueeView(Context context) {
         this(context,null);
@@ -59,6 +61,7 @@ public class MarqueeView  extends SurfaceView implements SurfaceHolder.Callback{
 
     public MarqueeView(Context context, AttributeSet attrs, int defStyleAttr) {
         super(context, attrs, defStyleAttr);
+        this.mContext=context;
         init(attrs, defStyleAttr);
     }
 
@@ -96,12 +99,17 @@ public class MarqueeView  extends SurfaceView implements SurfaceHolder.Callback{
         textWidth = (int)mTextPaint.measureText(margueeString);
         Paint.FontMetrics fontMetrics = mTextPaint.getFontMetrics();
         textHeight = (int) fontMetrics.bottom;
-        isFirst=true;
+        WindowManager wm = (WindowManager) mContext.getSystemService(Context.WINDOW_SERVICE);
+        int width = wm.getDefaultDisplay().getWidth();
+        if(mStartPoint==0)
+            currentX=0;
+        else
+            currentX=width-getPaddingLeft()-getPaddingRight();
+
     }
 
     @Override
     public void surfaceCreated(SurfaceHolder holder) {
-
     }
 
     @Override
@@ -120,6 +128,7 @@ public class MarqueeView  extends SurfaceView implements SurfaceHolder.Callback{
      * 开始滚动
      */
     public  void startScroll(){
+
         if(mThread!=null&&mThread.isRun)
             return;
         mThread = new MarqueeViewThread(holder);//创建一个绘图线程
@@ -134,7 +143,6 @@ public class MarqueeView  extends SurfaceView implements SurfaceHolder.Callback{
             mThread.isRun = false;
             mThread.interrupt();
         }
-
         mThread=null;
     }
     /**
@@ -170,21 +178,10 @@ public class MarqueeView  extends SurfaceView implements SurfaceHolder.Callback{
 
                     int centeYLine = paddingTop + contentHeight / 2;//中心线
 
-                    Log.v("999999","contentWidth:"+contentWidth);
-                    if(isFirst){
-                        if(mStartPoint==0)
-                            currentX=0;
-                        else
-                            currentX=getWidth();
-                        isFirst=false;
-                    }
-
-
                     if(mDirection==0) {//向左滚动
                         if(currentX <=-textWidth){
                             if(!mIsRepeat){//如果是不重复滚动
-                                stopScroll();
-                                return;
+                                mHandler.sendEmptyMessage(ROLL_OVER);
                             }
                             currentX=contentWidth;
                         }else{
@@ -193,8 +190,7 @@ public class MarqueeView  extends SurfaceView implements SurfaceHolder.Callback{
                     }else {//  向右滚动
                         if(currentX>=contentWidth){
                             if(!mIsRepeat){//如果是不重复滚动
-                                stopScroll();
-                                return;
+                                mHandler.sendEmptyMessage(ROLL_OVER);
                             }
                             currentX=-textWidth;
                         }else{
@@ -208,10 +204,8 @@ public class MarqueeView  extends SurfaceView implements SurfaceHolder.Callback{
 
                     int a=textWidth/margueeString.trim().length();
                     int b=a/sepX;
-                    int c=mSpeed/b==0?2:mSpeed/b;
+                    int c=mSpeed/b==0?1:mSpeed/b;
 
-                    Log.v("888888","b:"+b);
-                    Log.v("888888","c:"+c);
                     Thread.sleep(c);//睡眠时间为移动的频率
 
 
@@ -233,6 +227,22 @@ public class MarqueeView  extends SurfaceView implements SurfaceHolder.Callback{
 
     }
 
+    public static  final  int  ROLL_OVER =100;
+    Handler mHandler=new Handler(){
+        @Override
+        public void handleMessage(Message msg) {
+            super.handleMessage(msg);
+
+            switch (msg.what){
+                case ROLL_OVER:
+                    stopScroll();
+                    if(mOnMargueeListener!=null){
+                        mOnMargueeListener.onRollOver();
+                    }
+                    break;
+            }
+        }
+    };
 
     /**
      * dip转换为px
@@ -243,5 +253,25 @@ public class MarqueeView  extends SurfaceView implements SurfaceHolder.Callback{
     public static int dip2px(Context context, float dpValue) {
         final float scale = context.getResources().getDisplayMetrics().density;
         return (int) (dpValue * scale + 0.5f);
+    }
+
+    public void reset(){
+        int contentWidth = getWidth() - getPaddingLeft() - getPaddingRight();
+        if(mStartPoint==0)
+            currentX=0;
+        else
+            currentX=contentWidth;
+    }
+    /**
+     * 滚动回调
+     */
+    public interface OnMargueeListener{
+        void onRollOver();//滚动完毕
+    }
+
+    OnMargueeListener mOnMargueeListener;
+
+    public void setOnMargueeListener(OnMargueeListener mOnMargueeListener){
+        this.mOnMargueeListener=mOnMargueeListener;
     }
 }

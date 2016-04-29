@@ -10,8 +10,9 @@
         app:textcolor="@color/colorAccent"
         app:textSize="16sp"
         app:startPoint="end"
-        app:isRepeat="true"
+        app:isRepeat="false"
         app:direction="left"
+        app:speed="50"
         app:marqueebackground="@color/colorPrimaryDark"
         android:layout_width="match_parent"
         android:layout_height="50dp" />
