@@ -49,7 +49,7 @@ public class MarqueeView  extends SurfaceView implements SurfaceHolder.Callback{
 
     public int currentX=0;// 当前x的位置
 
-    public int sepX=3;//每一步滚动的距离
+    public int sepX=2;//每一步滚动的距离
 
     public MarqueeView(Context context) {
         this(context,null);
@@ -111,6 +111,7 @@ public class MarqueeView  extends SurfaceView implements SurfaceHolder.Callback{
 
     @Override
     public void surfaceCreated(SurfaceHolder holder) {
+        this.holder=holder;
     }
 
     @Override
@@ -199,7 +200,8 @@ public class MarqueeView  extends SurfaceView implements SurfaceHolder.Callback{
                         }
                     }
 
-                    canvas.drawColor(mBackgroundColor);
+                    if(canvas!=null)
+                        canvas.drawColor(mBackgroundColor);
                     canvas.drawText(margueeString,currentX, centeYLine+dip2px(getContext(),textHeight)/2,mTextPaint);
                     holder.unlockCanvasAndPost(canvas);//结束锁定画图，并提交改变。
 
