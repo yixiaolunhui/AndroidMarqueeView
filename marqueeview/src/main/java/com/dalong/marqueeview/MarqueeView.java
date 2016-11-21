@@ -5,12 +5,13 @@ import android.content.res.TypedArray;
 import android.graphics.Canvas;
 import android.graphics.Color;
 import android.graphics.Paint;
+import android.graphics.PixelFormat;
+import android.graphics.PorterDuff;
 import android.os.Handler;
 import android.os.Message;
 import android.text.TextPaint;
 import android.text.TextUtils;
 import android.util.AttributeSet;
-import android.util.Log;
 import android.view.SurfaceHolder;
 import android.view.SurfaceView;
 import android.view.WindowManager;
@@ -24,8 +25,6 @@ public class MarqueeView  extends SurfaceView implements SurfaceHolder.Callback{
     private float mTextSize = 100; //字体大小
 
     private int mTextColor = Color.RED; //字体的颜色
-
-    private int mBackgroundColor=Color.WHITE;//背景色
 
     private boolean mIsRepeat;//是否重复滚动
 
@@ -70,7 +69,6 @@ public class MarqueeView  extends SurfaceView implements SurfaceHolder.Callback{
         TypedArray a = getContext().obtainStyledAttributes(attrs, R.styleable.MarqueeView, defStyleAttr, 0);
         mTextColor = a.getColor(R.styleable.MarqueeView_textcolor, Color.RED);
         mTextSize = a.getDimension(R.styleable.MarqueeView_textSize, 48);
-        mBackgroundColor=a.getColor(R.styleable.MarqueeView_marqueebackground,Color.BLACK);
         mIsRepeat=a.getBoolean(R.styleable.MarqueeView_isRepeat,false);
         mStartPoint=a.getInt(R.styleable.MarqueeView_startPoint,0);
         mDirection=a.getInt(R.styleable.MarqueeView_direction,0);
@@ -82,6 +80,8 @@ public class MarqueeView  extends SurfaceView implements SurfaceHolder.Callback{
         mTextPaint = new TextPaint();
         mTextPaint.setFlags(Paint.ANTI_ALIAS_FLAG);
         mTextPaint.setTextAlign(Paint.Align.LEFT);
+        setZOrderOnTop(true);//使surfaceview放到最顶层
+        getHolder().setFormat(PixelFormat.TRANSLUCENT);//使窗口支持透明度
     }
 
     public void setText(String msg){
@@ -106,7 +106,6 @@ public class MarqueeView  extends SurfaceView implements SurfaceHolder.Callback{
             currentX=0;
         else
             currentX=width-getPaddingLeft()-getPaddingRight();
-
     }
 
     @Override
@@ -201,7 +200,7 @@ public class MarqueeView  extends SurfaceView implements SurfaceHolder.Callback{
                     }
 
                     if(canvas!=null)
-                        canvas.drawColor(mBackgroundColor);
+                        canvas.drawColor(Color.TRANSPARENT, PorterDuff.Mode.CLEAR);//绘制透明色
                     canvas.drawText(margueeString,currentX, centeYLine+dip2px(getContext(),textHeight)/2,mTextPaint);
                     holder.unlockCanvasAndPost(canvas);//结束锁定画图，并提交改变。
 
