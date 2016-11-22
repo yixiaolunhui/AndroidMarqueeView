@@ -8,7 +8,7 @@ android {
         minSdkVersion 14
         targetSdkVersion 23
         versionCode 1
-        versionName "1.0"
+        versionName "1.0.1"
     }
     buildTypes {
         release {
@@ -29,7 +29,7 @@ publish {
     userOrg = 'dalong982242260'//bintray.com用户名
     groupId = 'com.dalong'//jcenter上的路径
     artifactId = 'marqueeview'//项目名称
-    publishVersion = '1.0.0'//版本号
+    publishVersion = '1.0.1'//版本号
     desc = '跑马灯'//描述，不重要
     website = 'https://github.com/dalong982242260/AndroidMarqueeView'//网站，不重要
 }

@@ -1,11 +1,10 @@
 # AndroidMarqueeVie 跑马灯
    1、可以自定义字体颜色，字体大小。</p>
    2、可以设置是否重复滚动。</p>
-   3、可以设置背景颜色。</p>
-   4、可以设置滚动方向。</p>
-   5、可以设置滚动速度。</p>
-   6、可以设置滚动的位置。</p>
-   7、可以停止和开始滚动。</p>
+   3、可以设置滚动方向。</p>
+   4、可以设置滚动速度。</p>
+   5、可以设置滚动的位置。</p>
+   6、可以停止和开始滚动。</p>
 #效果图
 
 设置1：设置不可重复滚动，滚动完毕不在滚动（方向向左）
@@ -18,7 +17,6 @@
                 app:isRepeat="false"//是否重复滚动
                 app:direction="left"//滚动方向
                 app:speed="50"//滚动速度
-                app:marqueebackground="@color/colorPrimaryDark"//滚动背景颜色
                 android:layout_width="match_parent"
                 android:layout_height="50dp" />
 
@@ -97,5 +95,5 @@
 # 如何使用
     
     dependencies {
-        compile 'com.dalong:marqueeview:1.0.0'
+        compile 'com.dalong:marqueeview:1.0.1'
     }
