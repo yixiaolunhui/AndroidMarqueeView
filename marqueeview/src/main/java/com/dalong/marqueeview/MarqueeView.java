@@ -199,18 +199,17 @@ public class MarqueeView  extends SurfaceView implements SurfaceHolder.Callback{
                         }
                     }
 
-                    if(canvas!=null)
+                    if (canvas != null) {
                         canvas.drawColor(Color.TRANSPARENT, PorterDuff.Mode.CLEAR);//绘制透明色
-                    canvas.drawText(margueeString,currentX, centeYLine+dip2px(getContext(),textHeight)/2,mTextPaint);
-                    holder.unlockCanvasAndPost(canvas);//结束锁定画图，并提交改变。
+                        canvas.drawText(margueeString, currentX, centeYLine + dip2px(getContext(), textHeight) / 2, mTextPaint);
+                        holder.unlockCanvasAndPost(canvas);//结束锁定画图，并提交改变。
+                    }
 
                     int a=textWidth/margueeString.trim().length();
                     int b=a/sepX;
                     int c=mSpeed/b==0?1:mSpeed/b;
 
                     Thread.sleep(c);//睡眠时间为移动的频率
-
-
                 }
             }
             catch (Exception e) {
