@@ -15,5 +15,26 @@
             <enum name="right" value="1"/>
         </attr>
     </declare-styleable>
-
+    <declare-styleable name="AndTextViewLayout">
+        <attr name="and_text_color" format="color" />
+        <attr name="and_text_size" format="integer" />
+        <attr name="and_text_anim_up" format="boolean" />
+        <attr name="and_text_anim_down" format="boolean" />
+        <attr name="and_text_anim_left" format="boolean" />
+        <attr name="and_text_anim_right" format="boolean" />
+        <attr name="and_text_anim_duration_second" format="integer" />
+        <attr name="and_text_background_color" format="color" />
+        <attr name="and_text_desc" format="string" />
+    </declare-styleable>
+    <style name="def_and_text_layout">
+        <item name="and_text_color">#ffffff</item>
+        <item name="and_text_size">16</item>
+        <item name="and_text_anim_up">false</item>
+        <item name="and_text_anim_down">false</item>
+        <item name="and_text_anim_left">false</item>
+        <item name="and_text_anim_right">false</item>
+        <item name="and_text_anim_duration_second">10</item>
+        <item name="and_text_background_color">#00000000</item>
+        <item name="and_text_desc">滚动吧~~我的滚动条\n~~翻腾吧~~我曹</item>
+    </style>
 </resources>

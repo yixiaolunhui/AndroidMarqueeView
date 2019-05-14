@@ -1,39 +1,51 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    android:orientation="vertical"
-    android:background="@color/colorPrimary"
     android:layout_width="fill_parent"
-    android:layout_height="fill_parent">
+    android:layout_height="fill_parent"
+    android:background="@color/colorPrimary"
+    android:orientation="vertical">
 
     <com.dalong.marqueeview.MarqueeView
         android:id="@+id/mMarqueeView"
-        app:textcolor="@color/colorAccent"
-        app:textSize="16sp"
-        app:startPoint="end"
-        app:isRepeat="true"
-        app:direction="right"
-        app:speed="20"
         android:layout_width="match_parent"
-        android:layout_height="50dp" />
+        android:layout_height="50dp"
+        app:direction="right"
+        app:isRepeat="true"
+        app:speed="20"
+        app:startPoint="end"
+        app:textSize="16sp"
+        app:textcolor="@color/colorAccent" />
 
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content">
+
         <Button
-            android:text="开始"
             android:id="@+id/start"
-            android:textSize="18sp"
-            android:layout_weight="1"
             android:layout_width="wrap_content"
-            android:layout_height="wrap_content" />
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:text="开始"
+            android:textSize="18sp" />
+
         <Button
-            android:text="停止"
             android:id="@+id/stop"
-            android:layout_weight="1"
-            android:textSize="18sp"
             android:layout_width="wrap_content"
-            android:layout_height="wrap_content" />
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:text="停止"
+            android:textSize="18sp" />
     </LinearLayout>
+
+
+    <com.dalong.marqueeview.HorizontalMarqueeView
+        android:id="@+id/horizontal_marqueeview"
+        android:layout_width="match_parent"
+        android:layout_height="50dp"
+        android:layout_marginTop="30dp"
+        android:background="@color/colorAccent"
+        app:and_text_anim_left="true"
+        app:and_text_desc=""/>
 </LinearLayout>
 
