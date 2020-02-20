@@ -12,6 +12,7 @@ import android.os.Message;
 import android.text.TextPaint;
 import android.text.TextUtils;
 import android.util.AttributeSet;
+import android.util.Log;
 import android.view.SurfaceHolder;
 import android.view.SurfaceView;
 import android.view.WindowManager;
@@ -49,6 +50,7 @@ public class MarqueeView  extends SurfaceView implements SurfaceHolder.Callback{
     public int currentX=0;// 当前x的位置
 
     public int sepX=5;//每一步滚动的距离
+    private int mBackground = 0;
 
     public MarqueeView(Context context) {
         this(context,null);
@@ -73,6 +75,7 @@ public class MarqueeView  extends SurfaceView implements SurfaceHolder.Callback{
         mStartPoint=a.getInt(R.styleable.MarqueeView_startPoint,0);
         mDirection=a.getInt(R.styleable.MarqueeView_direction,0);
         mSpeed=a.getInt(R.styleable.MarqueeView_speed,20);
+        mBackground= a.getColor(R.styleable.MarqueeView_marqueebackground, Color.RED);
         a.recycle();
 
         holder = this.getHolder();
@@ -81,7 +84,8 @@ public class MarqueeView  extends SurfaceView implements SurfaceHolder.Callback{
         mTextPaint.setFlags(Paint.ANTI_ALIAS_FLAG);
         mTextPaint.setTextAlign(Paint.Align.LEFT);
         setZOrderOnTop(true);//使surfaceview放到最顶层
-        getHolder().setFormat(PixelFormat.TRANSLUCENT);//使窗口支持透明度
+        getHolder().setFormat(PixelFormat.TRANSPARENT);//使窗口支持透明度
+        setBackgroundColor(mBackground);
     }
 
     public void setText(String msg){
@@ -170,14 +174,10 @@ public class MarqueeView  extends SurfaceView implements SurfaceHolder.Callback{
                     }
                     Canvas canvas = holder.lockCanvas();
                     int paddingLeft = getPaddingLeft();
-                    int paddingTop = getPaddingTop();
                     int paddingRight = getPaddingRight();
-                    int paddingBottom = getPaddingBottom();
 
                     int contentWidth = getWidth() - paddingLeft - paddingRight;
-                    int contentHeight = getHeight() - paddingTop - paddingBottom;
-
-                    int centeYLine = paddingTop + contentHeight / 2;//中心线
+                    int centerYPos = (int) ((canvas.getHeight() / 2) - ((mTextPaint.descent() + mTextPaint.ascent()) / 2)) ;
 
                     if(mDirection==0) {//向左滚动
                         if(currentX <=-textWidth){
@@ -199,11 +199,9 @@ public class MarqueeView  extends SurfaceView implements SurfaceHolder.Callback{
                         }
                     }
 
-                    if (canvas != null) {
-                        canvas.drawColor(Color.TRANSPARENT, PorterDuff.Mode.CLEAR);//绘制透明色
-                        canvas.drawText(margueeString, currentX, centeYLine + dip2px(getContext(), textHeight) / 2, mTextPaint);
-                        holder.unlockCanvasAndPost(canvas);//结束锁定画图，并提交改变。
-                    }
+                    canvas.drawColor(Color.TRANSPARENT, PorterDuff.Mode.CLEAR);//绘制透明色
+                    canvas.drawText(margueeString, currentX,centerYPos , mTextPaint);
+                    holder.unlockCanvasAndPost(canvas);//结束锁定画图，并提交改变。
 
                     int a=textWidth/margueeString.trim().length();
                     int b=a/sepX;
