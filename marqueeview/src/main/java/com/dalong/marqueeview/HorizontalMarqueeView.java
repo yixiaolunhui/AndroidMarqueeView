@@ -4,6 +4,7 @@ import android.animation.ObjectAnimator;
 import android.animation.ValueAnimator;
 import android.content.Context;
 import android.content.res.TypedArray;
+import android.graphics.Color;
 import android.util.AttributeSet;
 import android.util.TypedValue;
 import android.view.Gravity;
@@ -18,6 +19,7 @@ public class HorizontalMarqueeView extends HorizontalScrollView {
     private int andTextColor;
     private int andTextSize;
     private int andTextBbackgroundColor;
+    private int backgroundColor;
     private boolean andTextAnimUp;
     private boolean andTextAnimDown;
     private boolean andTextAnimLeft;
@@ -37,37 +39,38 @@ public class HorizontalMarqueeView extends HorizontalScrollView {
 
     public HorizontalMarqueeView(Context context, AttributeSet attrs, int defStyleAttr) {
         super(context, attrs, defStyleAttr);
-        TypedArray typedArray = context.getTheme().obtainStyledAttributes(attrs, R.styleable.AndTextViewLayout, defStyleAttr, R.style.def_and_text_layout);
+        TypedArray typedArray = context.getTheme().obtainStyledAttributes(attrs, R.styleable.HorizontaMarqueeView, defStyleAttr, R.style.def_horizonta_marquee_view_layout);
         int indexCount = typedArray.getIndexCount();
         for (int i = 0; i < indexCount; i++) {
             int attr = typedArray.getIndex(i);
-            if (attr == R.styleable.AndTextViewLayout_and_text_color) {
+            if (attr == R.styleable.HorizontaMarqueeView_color) {
                 andTextColor = typedArray.getColor(attr, 0);
 
-            } else if (attr == R.styleable.AndTextViewLayout_and_text_size) {
+            } else if (attr == R.styleable.HorizontaMarqueeView_size) {
                 andTextSize = typedArray.getInteger(attr, 0);
 
-            } else if (attr == R.styleable.AndTextViewLayout_and_text_background_color) {
-                andTextBbackgroundColor = typedArray.getColor(attr, 0);
-
-            } else if (attr == R.styleable.AndTextViewLayout_and_text_anim_duration_second) {
+            } else if (attr == R.styleable.HorizontaMarqueeView_text_background) {
+                andTextBbackgroundColor = typedArray.getColor(attr, Color.WHITE);
+            }else if (attr == R.styleable.HorizontaMarqueeView_anim_duration_second) {
                 aniDuration = typedArray.getInteger(attr, 0) * 1000;
 
-            } else if (attr == R.styleable.AndTextViewLayout_and_text_anim_up) {
+            } else if (attr == R.styleable.HorizontaMarqueeView_anim_up) {
                 andTextAnimUp = typedArray.getBoolean(attr, false);
 
-            } else if (attr == R.styleable.AndTextViewLayout_and_text_anim_down) {
+            } else if (attr == R.styleable.HorizontaMarqueeView_anim_down) {
                 andTextAnimDown = typedArray.getBoolean(attr, false);
 
-            } else if (attr == R.styleable.AndTextViewLayout_and_text_anim_left) {
+            } else if (attr == R.styleable.HorizontaMarqueeView_anim_left) {
                 andTextAnimLeft = typedArray.getBoolean(attr, false);
 
-            } else if (attr == R.styleable.AndTextViewLayout_and_text_anim_right) {
+            } else if (attr == R.styleable.HorizontaMarqueeView_anim_right) {
                 andTextAnimRight = typedArray.getBoolean(attr, true);
 
-            } else if (attr == R.styleable.AndTextViewLayout_and_text_desc) {
+            } else if (attr == R.styleable.HorizontaMarqueeView_desc) {
                 andTextDesc = typedArray.getString(attr);
 
+            }else if(attr == R.styleable.HorizontaMarqueeView_marqueebackground){
+                backgroundColor = typedArray.getColor(attr,  Color.WHITE);
             }
         }
         typedArray.recycle();
@@ -88,7 +91,7 @@ public class HorizontalMarqueeView extends HorizontalScrollView {
         andTextView.setLayoutParams(layoutParams);
 
         addView(andTextView);
-
+        setBackgroundColor(backgroundColor);
         setOnTouchListener(new OnTouchListener() {
             @Override
             public boolean onTouch(View v, MotionEvent event) {

@@ -15,7 +15,8 @@
         app:speed="20"
         app:startPoint="end"
         app:textSize="16sp"
-        app:textcolor="@color/colorAccent" />
+        app:textcolor="@color/colorAccent"
+        app:marqueebackground="@android:color/white"/>
 
     <LinearLayout
         android:layout_width="match_parent"
@@ -44,8 +45,9 @@
         android:layout_width="match_parent"
         android:layout_height="50dp"
         android:layout_marginTop="30dp"
-        android:background="@color/colorAccent"
-        app:and_text_anim_left="true"
-        app:and_text_desc=""/>
+        app:marqueebackground="@color/colorAccent"
+        app:text_background="@android:color/black"
+        app:anim_left="true"
+        app:desc=""/>
 </LinearLayout>
 
